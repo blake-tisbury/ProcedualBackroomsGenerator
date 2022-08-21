@@ -55,7 +55,7 @@ class KruskalMaze:
 
         # completion_percentage is something that I wanted to add as it allows to generate sparse but
         # maze like structures, perfect for the backrooms
-        while len(maze) < len(self.nodes) - 1 or len(maze) < completion_percentage * len(self.nodes):
+        while len(maze) < len(self.nodes) - 1 and len(maze) < completion_percentage * len(self.nodes):
             # pick a random edge
             edge = self.edges.pop()
             # if the two nodes are not in the same set, union them and add the edge to the maze
