@@ -1,6 +1,7 @@
 import random
 import cProfile
 from functools import lru_cache
+from math import ceil
 
 
 class DisjointSet:
@@ -41,7 +42,7 @@ class DisjointSet:
 
 class KruskalMaze:
     def __init__(self, size):
-        self.size = size
+        self.size = ceil(size)  # rounds incase the user enters a float
         self.nodes = self.generate_nodes()
         self.edges = [(node, neighbor) for node in self.nodes for neighbor in self.generate_neighbors(node)]
         self.ds = DisjointSet(self.nodes)
