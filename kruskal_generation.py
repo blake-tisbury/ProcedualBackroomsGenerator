@@ -1,8 +1,12 @@
+import random
+
+
 class DisjointSet:
-    # TODO: Add rank balancing to union function and path compression to find function to reduce time complexity
+    # TODO: add rank balancing to union function and path compression to find function to reduce time complexity
     def __init__(self, nodes):
         self.parent = {}
 
+        # initialize each node to itself as the parent, creating "i" number of disjoint sets
         for i in nodes:
             self.parent[i] = i
 
@@ -23,3 +27,32 @@ class DisjointSet:
         # TODO: check if this is actually faster than just doing the union operation
         if parent1 != parent2:
             self.parent[parent1] = parent2
+
+
+# Kruskal's Algorithm
+def random_kruskal_maze(size):
+    maze = []
+    nodes = generate_nodes(size)
+    edges = [(node, nbor) for node in nodes for nbor in generate_neighbors(node, size)]
+    ds = DisjointSet(nodes)
+
+    while len(maze) < len(nodes) - 1:
+        # pick a random edge
+        edge = edges.pop(random.randint(0, len(edges) - 1))
+        # if the two nodes are not in the same set, union them and add the edge to the maze
+        if ds.find(edge[0]) != ds.find(edge[1]):
+            ds.union(edge[0], edge[1])
+            maze.append(edge)
+
+    return maze
+
+
+def generate_nodes(size):
+    return [(i, j) for j in range(size) for i in range(size)]
+
+
+def generate_neighbors(node, size):
+    return [(node[0] + dx, node[1] + dy) for dx, dy in ((-1, 0), (1, 0), (0, -1), (0, 1))
+            if 0 <= node[0] + dx < size and 0 <= node[1] + dy < size]
+
+
